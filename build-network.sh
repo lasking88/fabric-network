@@ -5,10 +5,12 @@ rm -r ./channel-artifacts
 mkdir ./channel-artifacts
 
 export FABRIC_CFG_PATH=$PWD
-export CHANNEL_NAME=tnochannel
+export CHANNEL_NAME=mychannel
 
 ./bin/cryptogen generate --config=./crypto-config.yaml
-./bin/configtxgen -profile OrdererGenesis -outputBlock ./channel-artifacts/genesis.block
-./bin/configtxgen -profile MyChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
-./bin/configtxgen -profile MyChannel -outputAnchorPeersUpdate ./channel-artifacts/Comp1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Comp1MSP
-./bin/configtxgen -profile MyChannel -outputAnchorPeersUpdate ./channel-artifacts/Comp2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Comp2MSP
+./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
+./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
+./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
+
+docker-compose -f docker-compose-cli.yaml up -d
