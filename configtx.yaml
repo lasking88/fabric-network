@@ -1,0 +1,73 @@
+Profiles:
+    OrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortitum:
+                Organizations:
+                    - *Company1
+                    - *Company2
+    MyChannel:
+        Consortium: SampleConsortitum
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Company1
+                - *Company2
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/tno.nl/msp
+    - &Company1
+        Name: Comp1MSP
+        ID: Comp1MSP
+        MSPDir: crypto-config/peerOrganizations/comp1.tno.nl/msp
+        AnchorPeers:
+            - Host: peer0.comp1.tno.nl
+              Port: 7051
+            - Host: peer1.comp1.tno.nl
+              Port: 7052
+    - &Company2
+        Name: Comp2MSP
+        ID: Comp2MSP
+        MSPDir: crypto-config/peerOrganizations/comp2.tno.nl/msp
+        AnchorPeers:
+            - Host: peer0.comp2.tno.nl
+              Port: 7051
+            - Host: peer1.comp2.tno.nl
+              Port: 7052
+
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses:
+        - orderer.tno.nl:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+        Brokers:
+            - localhost:9092
+    Organizations:
+
+Application: &ApplicationDefaults
+    Organizations:
+
+Capabilities:
+    Global: &ChannelCapabilities
+        V1_1: true
+    Orderer: &OrdererCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_1: true
