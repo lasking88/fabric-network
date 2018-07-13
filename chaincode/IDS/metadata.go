@@ -12,10 +12,7 @@ import (
 type MetaDataChainCode struct {
 }
 
-<<<<<<< HEAD
 // definition of data request message
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 type dataMessage struct {
 	Id			 	string		`xml:"id"`
 	Action		 	string		`xml:"action"`
@@ -25,11 +22,7 @@ type dataMessage struct {
 	}	`xml:"payload"`
 }
 
-<<<<<<< HEAD
-
 // definition of query request message
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 type queryMessage struct {
 	Id 				string		`xml:"id"`
 	Action 			string		`xml:"action"`
@@ -45,10 +38,7 @@ type IdsElementInterface interface {
 	Passivate()
 }
 
-<<<<<<< HEAD
 // common features as an IDS element
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 type IdsElement struct {
 	Key			string		`xml:"key"`
 	Active		string		`xml:"active"`
@@ -67,29 +57,20 @@ func (e *IdsElement) Passivate() {
 	e.Active = "false"
 }
 
-<<<<<<< HEAD
 // Participant type which has many Connector entities
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 type participant struct {
 	IdsElement
 	IdsConnectors		[]string	`xml:">idsConnector"`
 }
 
-<<<<<<< HEAD
 // Connector type which has a participant as a parent entity and many data endpoints entities
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 type connector struct {
 	IdsElement
 	Participant			string		`xml:"idsParticipant"`
 	Dataendpoints		[]string	`xml:">idsDataEndpoint"`
 }
 
-<<<<<<< HEAD
 // Data-endpoint type which has a parent Connector
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 type dataendpoint struct {
 	IdsElement
 	Connector			string		`xml:"idsConnector"`
@@ -105,10 +86,7 @@ func (t *MetaDataChainCode) Init(stub shim.ChaincodeStubInterface) peer.Response
 	return shim.Success(nil)
 }
 
-<<<<<<< HEAD
 // Invoke method implementation to invoke a transaction or a query
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 func (t *MetaDataChainCode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 	fn, args := stub.GetFunctionAndParameters()
 	fmt.Println("invoke is running...")
@@ -123,10 +101,7 @@ func (t *MetaDataChainCode) Invoke(stub shim.ChaincodeStubInterface) peer.Respon
 	return shim.Error("Received unknown function invocation")
 }
 
-<<<<<<< HEAD
 // Auxilary function to publish a metadata
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 func (t *MetaDataChainCode) dataRequest(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	if len(args) != 1 {
 		return shim.Error("Expecting a dataRequestMessage")
@@ -168,10 +143,7 @@ func (t *MetaDataChainCode) dataRequest(stub shim.ChaincodeStubInterface, args [
 	return shim.Error("Unknown action")
 }
 
-<<<<<<< HEAD
 // Auxiliary function to retrieve a metadata or a metadata set
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 func (t *MetaDataChainCode) queryRequest(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	if len(args) != 1 {
 		return shim.Error("Expecting a queryRequestMessage")
@@ -480,10 +452,7 @@ func (t *MetaDataChainCode) removeElement(stub shim.ChaincodeStubInterface, meta
 	return shim.Success(nil)
 }
 
-<<<<<<< HEAD
 // fetch an IDS element filtered by a key
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 func (t *MetaDataChainCode) fetchElementByKey(stub shim.ChaincodeStubInterface, action string, payloadBytes []byte, scope string) peer.Response {
 	var element IdsElement
 	err := xml.Unmarshal(payloadBytes, &element)
@@ -500,10 +469,7 @@ func (t *MetaDataChainCode) fetchElementByKey(stub shim.ChaincodeStubInterface, 
 	return scopeHelper(stub, elementBytes, scope)
 }
 
-<<<<<<< HEAD
 // fetch an IDS element filtered by a type
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 func (t *MetaDataChainCode) fetchElementsByType(stub shim.ChaincodeStubInterface, action string, payloadBytes []byte, scope string) peer.Response {
 	metadataType := string(payloadBytes)
 
@@ -551,10 +517,7 @@ func (t *MetaDataChainCode) fetchElementsByType(stub shim.ChaincodeStubInterface
 	return shim.Success(buffer.Bytes())
 }
 
-<<<<<<< HEAD
 // Auxiliary function to deal with scope of a message
-=======
->>>>>>> cff2ef9b487cfb9d1267040269dde7cb93d62c8d
 func scopeHelper(stub shim.ChaincodeStubInterface, elementBytes []byte, scope string) peer.Response {
 	var element IdsElement
 	err := xml.Unmarshal(elementBytes, &element)
